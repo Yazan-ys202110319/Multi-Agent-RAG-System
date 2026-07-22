@@ -1,15 +1,14 @@
+# Load the text from the files that you want the RAG to work with
+
 import fitz
 import os
 
-print("test")
 
 def load_documents(folder_path):
 
     documents = []
 
     pdf_files = os.listdir(folder_path) # Get all files
-
-    # print(pdf_files)
 
     for file in pdf_files: # For each file in files
 
