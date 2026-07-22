@@ -20,3 +20,4 @@ def create_embeddings(chunks): # Receives a list of chunks from all documents
     embeddings = model.encode(texts) # covert to vectors, each chunk will get 1 vector 
 
     return embeddings
+
