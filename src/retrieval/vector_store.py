@@ -26,7 +26,7 @@ import chromadb
 # chromadb.persistentclient() --> stores data on disk (folder) --> Data is saved
 
 
-client = chromadb.PersistentClient(path='./chroma_db') # path where you want to save
+client = chromadb.PersistentClient(path='../chroma_db') # path where you want to save
 
 collection = client.get_or_create_collection(name="research_papers") # If name exists retrieves and returns the existing collection.
 
@@ -56,7 +56,6 @@ def store_embeddings(chunks, embeddings):
         # But ChromaDB expects a regular Python list.
     )
 
-    print(collection)
 
     return collection
 
