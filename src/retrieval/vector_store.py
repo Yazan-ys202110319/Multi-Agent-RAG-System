@@ -12,20 +12,6 @@
 import chromadb
 
 
-# =============================================================
-
-
-# Lesson 2
-
-# Why the data disappers when using the regular client? You can fix it using Persistent Client. 
-# How to make the data available across and can be used in mutltiple scripts.
-
-
-
-# chromadb.client() --> stores data in the memory --> Data is lost
-# chromadb.persistentclient() --> stores data on disk (folder) --> Data is saved
-
-
 client = chromadb.PersistentClient(path='../chroma_db') # path where you want to save
 
 collection = client.get_or_create_collection(name="research_papers") # If name exists retrieves and returns the existing collection.
@@ -58,5 +44,26 @@ def store_embeddings(chunks, embeddings):
 
 
     return collection
+
+
+
+# Next step is about retrieval (searching your documents to answer a query from the user)
+
+# This function is responsible for searching your ChromaDB vector database 
+# and retrieving the most relevant document chunks for a user's query.
+def search_documents(query_embedding, n_results = 3):
+    # query_embedding --> This is the vector representation of the user's question.
+    # For all-MiniLM-L6-v2, this vector has 384 dimensions:
+
+    # n_results = 3 --> This controls how many matching documents you want back (the closest).
+
+    results = collection.query(
+        query_embeddings = [query_embedding.tolist()], # In case the user query was a NumPy array convert it to list
+        # after it will be like: [[0.12, 0.98, 0.84]]
+        n_results = n_results
+    )
+
+    
+    return results
 
 
