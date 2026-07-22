@@ -31,4 +31,33 @@ client = chromadb.PersistentClient(path='./chroma_db') # path where you want to 
 collection = client.get_or_create_collection(name="research_papers") # If name exists retrieves and returns the existing collection.
 
 
+# This method is responsible for storing the chunks and their embeddings / vectors in ChromaDB.
+def store_embeddings(chunks, embeddings):
+
+    ids = [] # This will store the ids 
+    documents = [] # This will store the documents 
+
+
+    # This loop will go or iterate over 2 things: i --> which will represent one chunk or an index.
+    # chunk --> will have the actual chunk text and ignore the file name.
+    # enumerate() gives you both the index and the chunk. 
+    for i, chunk in enumerate(chunks):
+        # ChromaDB requires every document to have a unique ID, and they must be string.
+        ids.append(str(i))
+        documents.append(chunk["text"]) # Get the text from chunk and append it 
+
+
+    # Add everything to ChromaDB
+    # We are telling ChromaDB for chunks store the document (the chunk) with its embeddings / vector.
+    collection.add(
+        ids=ids,
+        documents=documents,
+        embeddings=embeddings.tolist() # In embeddings.py when we do (model.encode(text)) it will return a NumPy array.
+        # But ChromaDB expects a regular Python list.
+    )
+
+    print(collection)
+
+    return collection
+
 
