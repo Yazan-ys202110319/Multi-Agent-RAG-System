@@ -12,9 +12,12 @@ def generate_answer(question, context):
 
     # Create the prompt 
     prompt = f"""
-    You are an AI assistant.
+    You are a helpful AI research assistant.
     
-    Answer the question using only the provided context.
+    Use ONLY the information provided in the context below.
+
+    If the answer cannot be found in the context, reply:
+    "I don't have enough information in the provided documents."
 
     Context:
     {context}

@@ -38,8 +38,12 @@ def store_embeddings(chunks, embeddings):
     collection.add(
         ids=ids,
         documents=documents,
-        embeddings=embeddings.tolist() # In embeddings.py when we do (model.encode(text)) it will return a NumPy array.
+        embeddings=embeddings.tolist(), # In embeddings.py when we do (model.encode(text)) it will return a NumPy array.
         # But ChromaDB expects a regular Python list.
+        metadatas=[
+            {"filename": chunk["filename"]} # Get the filename from the chunk
+            for chunk in chunks # For each chunk in chunks
+        ]
     )
 
 
