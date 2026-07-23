@@ -21,3 +21,10 @@ def create_embeddings(chunks): # Receives a list of chunks from all documents
 
     return embeddings
 
+
+# This function to convert a question to a vector not chunks as the above 
+def create_query_embedding(question):
+
+    embedding = model.encode(question)
+
+    return embedding
