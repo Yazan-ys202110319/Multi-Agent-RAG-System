@@ -29,4 +29,3 @@ def ask_question(question):
     return answer
 
 
-print(ask_question("Explain YOLO"))
