@@ -9,6 +9,7 @@ from pydantic import BaseModel
 from src.pipeline import ask_question
 
 
+
 app = FastAPI(title = "Multi-Agent RAG System") # Create the API application, and give it a name
 
 
@@ -33,14 +34,13 @@ def ask(request : QuestionRequest):
 
 
 
-    # Here is where the API connects to the AI / RAG system.
-    answer = ask_question(request.question) 
+    # Here is where the API connects to the AI / RAG system in pipeline.
+    response = ask_question(request.question) 
+    
 
     # Returning the response from my RAG system
-    # We return a dictionary and FastAPI will converts it to JSON
-    return {
-        "answer": answer
-    }
+    # ask_question will return 2 things: the answer from the LLM, the metadatas (see ask_questio() in pipeline.py) 
+    return response
 
 
 #                 User

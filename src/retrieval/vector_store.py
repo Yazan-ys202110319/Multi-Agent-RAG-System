@@ -11,8 +11,19 @@
 
 import chromadb
 
+from src.ingestion.embeddings import create_query_embedding
+from pathlib import Path # to build the path for the chroma 
 
-client = chromadb.PersistentClient(path='../chroma_db') # path where you want to save
+BASE_DIR = Path(__file__).resolve().parents[2]
+# __file__ means: the current file location 
+# .resolve() gets the absolute / full path of the file
+# parents goes to the parent folder of the current file
+DB_PATH = BASE_DIR / "chroma_db" # chroma db path
+
+print("Using ChromaDB at:", DB_PATH)
+
+client = chromadb.PersistentClient(path=str(DB_PATH))
+
 
 collection = client.get_or_create_collection(name="research_papers") # If name exists retrieves and returns the existing collection.
 
@@ -41,7 +52,7 @@ def store_embeddings(chunks, embeddings):
         embeddings=embeddings.tolist(), # In embeddings.py when we do (model.encode(text)) it will return a NumPy array.
         # But ChromaDB expects a regular Python list.
         metadatas=[
-            {"filename": chunk["filename"]} # Get the filename from the chunk
+            {"filename": chunk["filename"]} # Store the filename from the chunk for the metadata
             for chunk in chunks # For each chunk in chunks
         ]
     )
@@ -67,7 +78,14 @@ def search_documents(query_embedding, n_results = 3):
         n_results = n_results
     )
 
+    print("results: ",results)
+
+    # To get the texts and the metadats from ChromDB
+    documents = results["documents"][0]
+    metadatas = results["metadatas"][0]
+
     
-    return results
+    return documents, metadatas
 
-
+# if __name__ == "__main__":
+    
