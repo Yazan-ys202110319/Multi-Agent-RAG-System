@@ -8,10 +8,9 @@
 # store the original text
 # search for similar chunks later
 
-
+print("First")
 import chromadb
-
-from src.ingestion.embeddings import create_query_embedding
+print("second")
 from pathlib import Path # to build the path for the chroma 
 
 BASE_DIR = Path(__file__).resolve().parents[2]
@@ -27,6 +26,7 @@ client = chromadb.PersistentClient(path=str(DB_PATH))
 
 collection = client.get_or_create_collection(name="research_papers") # If name exists retrieves and returns the existing collection.
 
+print("third")
 
 # This method is responsible for storing the chunks and their embeddings / vectors in ChromaDB.
 def store_embeddings(chunks, embeddings):
@@ -78,14 +78,9 @@ def search_documents(query_embedding, n_results = 3):
         n_results = n_results
     )
 
-    print("results: ",results)
-
     # To get the texts and the metadats from ChromDB
     documents = results["documents"][0]
     metadatas = results["metadatas"][0]
 
     
     return documents, metadatas
-
-# if __name__ == "__main__":
-    
