@@ -57,3 +57,4 @@ Draft Answer
 A validation agent doesn't generate a new answer.
 
 It checks whether the answer is acceptable.
+
