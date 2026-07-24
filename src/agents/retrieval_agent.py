@@ -19,7 +19,6 @@ def retrieval_agent(question):
         n_results = 5
     )
 
-    print(results)
 
     # 3- Extract documents / chunks / context
     chunks = results["documents"][0]

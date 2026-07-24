@@ -7,7 +7,7 @@ import requests
 
 def generate_answer(question, context):
     # question --> the user question 
-    # context → the text retrieved from ChromaDB
+    # context → the text / documents retrieved from ChromaDB
 
 
     # Create the prompt 

@@ -1,18 +1,14 @@
-print("0")
-
 from src.agents.retrieval_agent import retrieval_agent
+from src.agents.reasoning_agent import reasoning_agent
 
-print("1")
 
 question = "Explain YOLO"
-
-print("2")
-
 
 # Using the retrieval agent get the related chunks to the question 
 chunks = retrieval_agent(question)
 
-print("3")
 
-# for chunk in chunks:
-#     print(chunk)
+# Using the resoning agent get the answer from the llm
+answer = reasoning_agent(question, chunks)
+
+print(answer)
