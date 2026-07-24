@@ -4,11 +4,24 @@
 
 from sentence_transformers import SentenceTransformer # This library provides pretrained models that convert text into vectors
 
-# Load the model
-model = SentenceTransformer("all-MiniLM-L6-v2")
+
+model = None
+
+def get_model(): # Lazy load the embedding model
+
+    global model
+
+    if model is None:
+        model = SentenceTransformer("all-MiniLM-L6-v2")
+        print("Embedding model loaded")
+
+    return model
+
 
 def create_embeddings(chunks): # Receives a list of chunks from all documents
     # chunks will have chunks from all files 
+
+    model = get_model()
 
     # Extract the text from each chunk of the file
     texts = []
@@ -24,6 +37,9 @@ def create_embeddings(chunks): # Receives a list of chunks from all documents
 
 # This function to convert a question to a vector not chunks as the above 
 def create_query_embedding(question):
+
+
+    model = get_model()
 
     embedding = model.encode(question)
 
