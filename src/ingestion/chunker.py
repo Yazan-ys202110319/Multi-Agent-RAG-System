@@ -26,3 +26,5 @@ def chunk_documents(documents, chunk_size = 500): # will receive the output of l
     return chunks
 
 # Later each chunk will become a vector 
+
+

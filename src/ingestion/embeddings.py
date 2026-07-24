@@ -49,3 +49,5 @@ def create_query_embedding(question):
     embedding = model.encode(question)
 
     return embedding
+
+

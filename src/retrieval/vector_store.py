@@ -84,3 +84,5 @@ def search_documents(query_embedding, n_results = 3):
 
     
     return documents, metadatas
+
+

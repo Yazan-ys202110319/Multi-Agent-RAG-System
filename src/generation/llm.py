@@ -46,3 +46,4 @@ def generate_answer(question, context):
     # Now we want to extract the answer from the response JSON file from Ollama.
     return response.json()["response"]
 
+

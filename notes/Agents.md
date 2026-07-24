@@ -58,3 +58,52 @@ A validation agent doesn't generate a new answer.
 
 It checks whether the answer is acceptable.
 
+---
+
+```
+Retrieval Agent
+    ↓
+Find relevant chunks
+
+Reasoning Agent
+    ↓
+Generate an answer
+
+Validation Agent
+    ↓
+Check if the answer is acceptable
+```
+
+`graph.py` decides who runs next.
+
+```
+User Question
+      |
+      ↓
+Retrieval Agent
+      |
+      |  returns chunks
+      ↓
+Reasoning Agent
+      |
+      |  returns draft answer
+      ↓
+Validation Agent
+      |
+      |  returns checked answer
+      ↓
+Final Response
+```
+
+So the system will be:
+```
+Retrieval Agent
+        ↓
+Reasoning Agent
+        ↓
+Validation Agent
+        ↓
+LangGraph Controller
+        ↓
+FastAPI
+```
