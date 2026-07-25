@@ -3,7 +3,7 @@
 
 from typing import TypedDict
 
-from langgraph.graph import State, START, END
+from langgraph.graph import StateGraph, START, END
 
 
 from src.agents.retrieval_agent import retrieval_agent
@@ -86,8 +86,53 @@ def validation_node(state: AgentState):
 #        ↓
 # valid / invalid
 
+
+
 # Step 3- Build the graph
 
+graph_builder = StateGraph(AgentState)
+
+
+# Add the nodes 
+
+graph_builder.add_node(
+    "retrieval", # the name of the agent
+    retrieval_agent # defining the method for this agent
+)
+
+graph_builder.add_node(
+    "reasoning", 
+    reasoning_agent
+)
+
+graph_builder.add_node(
+    "validation",
+    validation_agent
+)
+
+
+# Step 4- Connect the agent
+
+graph_builder.add_edge(
+    START,
+    "retrieval"
+)
+
+graph_builder.add_edge(
+    "retrieval",
+    "reasoning"
+)
+
+graph_builder.add_edge(
+    "reasoning",
+    "validation"
+)
+
+
+graph_builder.add_edge(
+    "validation",
+    END
+)
 
 
 
