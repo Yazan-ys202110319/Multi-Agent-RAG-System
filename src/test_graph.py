@@ -13,5 +13,3 @@ result = graph.invoke(
     }
 )
 
-
-print(result)

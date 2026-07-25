@@ -55,8 +55,8 @@ def vaalidate_answer(question, answer, context):
 
     prompt = f"""
     You are an answer quality evaluator.
-    Your job is to check if the generated answer correctly answers the question
-    using ONLY the provided context.
+    
+    Your task is to evaluate whether the generated answer correctly answers the user's question using ONLY the provided context.
 
     Question:
     {question}
@@ -67,30 +67,43 @@ def vaalidate_answer(question, answer, context):
     Generated Answer: 
     {answer}
 
-    Check:
-    1. Is the answer relevant to the question?
-    2. Is the answer supported by the context?
-    3. Does the answer contain incorrect information?
-
     
-    Evaluate the answer quality.
-    
-    Give a score from 1 to 10.
+    Evaluate the answer using the following criteria:
 
-    1 = completely wrong
-    10 = excellent answer
+    1. Correctness (40%)
+    - Is the information factually correct according to the context?
 
-    You MUST follow this exact format:
+    2. Completeness (30%)
+    - Does the answer cover all important points needed to answer the question?
 
-    SCORE: 1-10
+    3. Grounding (20%)
+    - Is every claim supported by the provided context?
+    - Do not reward information that is not found in the context.
 
-    STATUS: VALID or INVALID
+    4. Clarity (10%)
+    - Is the answer well-written, easy to understand, and logically organized?
 
-    REASON:
-    one sentence explanation
+    Scoring:
+    - 1-3: Poor
+    - 4-5: Fair
+    - 6-7: Good
+    - 8-9: Very Good
+    - 10: Excellent
 
+    Be strict.
+    Only give a score of 10 if the answer is completely correct, comprehensive, fully supported by the context, and clearly written.
+    If any important information is missing, the score should be 9 or lower.
 
-    Do not add anything else.
+    Determine whether the answer is VALID or INVALID.
+    An answer is VALID if it is factually correct and sufficiently answers the user's question using the provided context.
+
+    Return EXACTLY in this format:
+
+    SCORE: <1-10>
+    STATUS: <VALID or INVALID>
+    REASON: <one short sentence>
+
+    Do not include any additional text.
 
     """
 

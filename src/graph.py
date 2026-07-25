@@ -110,7 +110,7 @@ def validation_node(state: AgentState):
 # the routing function, it decide where to go next.
 def check_validation(state: AgentState):
 
-    if state["score"] >= 8:
+    if state["score"] and state["score"] >= 8:
         return "end"
 
     if state["retries"] >= 3:
