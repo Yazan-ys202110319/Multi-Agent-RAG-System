@@ -1,29 +1,44 @@
 # It checks whether the answer is acceptable.
 
+import re
 
-def validation_agent(answer, chunks):
+from src.generation.llm import vaalidate_answer
 
-    # If no answer has been generated
-    if not answer.strip(): # Remove whitespace becacse they are technically not empty
-        return {
-            "valid": False,
-            "answer": "No answer was generated"
-        }
+def validation_agent(question, answer, chunks):
 
-    # No retrieved context 
-    if len(chunks) == 0:
-        return {
-            "valid": False,
-            "answer": "No relevant documents were found"
-        }
+    
+    context = "\n".join(chunks)
 
-    # Else (everything looks fine) 
+    result = vaalidate_answer(
+        question, 
+        answer,
+        context
+    )
+
+    if "STATUS: VALID" in result.upper():
+        valid = True
     else:
-        return {
-            "valid": True,
-            "answer": answer
-        }
+        valid = False
 
+
+    print("Validator response:")
+    print(result)
+
+
+    score_match = re.search(r"SCORE:\s*(\d+)", result)
+
+    if score_match:
+        score = int(score_match.group(1))
+    else:
+        score = 0
+
+
+    return {
+        "valid": valid,
+        "answer": answer,
+        "feedback": result,
+        "score": score
+    }
 
 
     

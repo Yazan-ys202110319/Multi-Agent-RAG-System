@@ -5,7 +5,7 @@ import requests
 
 
 
-def generate_answer(question, context):
+def generate_answer(question, context, feedback):
     # question --> the user question 
     # context → the text / documents retrieved from ChromaDB
 
@@ -25,7 +25,10 @@ def generate_answer(question, context):
     Question:
     {question}
 
-    Answer:
+    Previous answer feedback:
+    {feedback}
+
+    Generate an improved answer.
     """
 
     # Sending the request to Ollama
@@ -47,3 +50,59 @@ def generate_answer(question, context):
     return response.json()["response"]
 
 
+# Check the answer by the llm
+def vaalidate_answer(question, answer, context):
+
+    prompt = f"""
+    You are an answer quality evaluator.
+    Your job is to check if the generated answer correctly answers the question
+    using ONLY the provided context.
+
+    Question:
+    {question}
+
+    Context:
+    {context}
+
+    Generated Answer: 
+    {answer}
+
+    Check:
+    1. Is the answer relevant to the question?
+    2. Is the answer supported by the context?
+    3. Does the answer contain incorrect information?
+
+    
+    Evaluate the answer quality.
+    
+    Give a score from 1 to 10.
+
+    1 = completely wrong
+    10 = excellent answer
+
+    You MUST follow this exact format:
+
+    SCORE: 1-10
+
+    STATUS: VALID or INVALID
+
+    REASON:
+    one sentence explanation
+
+
+    Do not add anything else.
+
+    """
+
+    response = requests.post(
+        "http://localhost:11434/api/generate",
+        json = {
+            "model": "mistral",
+            "prompt": prompt,
+            "stream": False
+        }
+    )
+
+
+    return response.json()["response"]
+    

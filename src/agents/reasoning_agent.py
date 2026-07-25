@@ -2,13 +2,13 @@
 
 from src.generation.llm import generate_answer
 
-def reasoning_agent(question, chunks):
+def reasoning_agent(question, chunks, feedback):
 
     # Convrt retrieved chunks into one context string
     context = "\n".join(chunks)
 
     # Ask the LLM
-    answer = generate_answer(question = question, context = context)
+    answer = generate_answer(question = question, context = context, feedback = feedback)
 
     return answer
 

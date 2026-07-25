@@ -19,6 +19,9 @@ class AgentState(TypedDict):
     chunks: str
     answer: str
     valid: str
+    retries: int
+    feedback: str
+    score: int
 
 
 # Step 2- Creating the nodes for each agent
@@ -49,9 +52,16 @@ def retrieval_node(state: AgentState):
 
 def reasoning_node(state: AgentState):
 
-    answer = reasoning_agent(state["question"], state["chunks"])
+    print("\n--- REASONING ---")
+    print("Feedback:", state["feedback"])
+
+    answer = reasoning_agent(state["question"], state["chunks"], state["feedback"])
+
+    print("Answer:", answer)
 
     state["answer"] = answer
+
+    
 
     return state
 
@@ -66,14 +76,24 @@ def reasoning_node(state: AgentState):
 # Validation node
 def validation_node(state: AgentState):
 
-    results = validation_agent(state["answer"], state["chunks"])
+    print("\n--- VALIDATION ---")
+
+    results = validation_agent(state["question"], state["answer"], state["chunks"])
+
+    print("Score:", results["score"])
+    print("Valid:", results["valid"])
+    print("Feedback:", results["feedback"])
 
     # Get the final answer and validation from the agent, the answer might change in case the valid = False (check the agent code)
 
     # If valid = True, the answer will be as it is coming from reasoning_node (so without chaning) 
     state["answer"] = results["answer"]
     state["valid"] = results["valid"]
+    state["feedback"] = results["feedback"]
+    state["score"] = results["score"]
 
+
+    state["retries"] += 1 # add one more retry
 
     return state
 
@@ -85,6 +105,19 @@ def validation_node(state: AgentState):
 #        |
 #        ↓
 # valid / invalid
+
+
+# the routing function, it decide where to go next.
+def check_validation(state: AgentState):
+
+    if state["score"] >= 8:
+        return "end"
+
+    if state["retries"] >= 3:
+        return "end"
+
+    # otherwise (lesss than 3 and not true)
+    return "retry" # Try improving answer
 
 
 
@@ -129,10 +162,17 @@ graph_builder.add_edge(
 )
 
 
-graph_builder.add_edge(
+# Make the validation agent retry if the validation is wrong, so the graph now can choose paths
+graph_builder.add_conditional_edges(
     "validation",
-    END
+    check_validation,
+    { # in langGraph it is a special routing dictionary that tells the graph where to go based on the result of a decision function.
+        "end": END,
+        "retry": "reasoning"
+    }
 )
+
+
 
 # Step 5- Compile the graph
 
