@@ -24,7 +24,7 @@ class AgentState(TypedDict):
 # Step 2- Creating the nodes for each agent
 
 # Retrieval node
-def retrieval_agent(state: AgentState):
+def retrieval_node(state: AgentState):
 
     # Get the question from the state
     chunks = retrieval_agent(state["question"])
@@ -97,17 +97,17 @@ graph_builder = StateGraph(AgentState)
 
 graph_builder.add_node(
     "retrieval", # the name of the agent
-    retrieval_agent # defining the method for this agent
+    retrieval_node # the method for this agent / node
 )
 
 graph_builder.add_node(
     "reasoning", 
-    reasoning_agent
+    reasoning_node
 )
 
 graph_builder.add_node(
     "validation",
-    validation_agent
+    validation_node
 )
 
 
@@ -133,6 +133,12 @@ graph_builder.add_edge(
     "validation",
     END
 )
+
+# Step 5- Compile the graph
+
+graph = graph_builder.compile() # Now graph has the workflow
+
+
 
 
 
