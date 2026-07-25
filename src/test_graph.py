@@ -8,8 +8,14 @@ result = graph.invoke(
         "answer": "",
         "valid": False,
         "feedback": "",
-        "retries": 0,
-        "score": 0
+        "score": 0,
+        "retries": 0
     }
 )
+
+
+print("\n========== FINAL RESULT ==========")
+
+print(result)
+
 

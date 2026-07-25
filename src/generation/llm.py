@@ -5,7 +5,7 @@ import requests
 
 
 
-def generate_answer(question, context, feedback):
+def generate_answer(question, context, feedback=""):
     # question --> the user question 
     # context → the text / documents retrieved from ChromaDB
 
@@ -51,7 +51,7 @@ def generate_answer(question, context, feedback):
 
 
 # Check the answer by the llm
-def vaalidate_answer(question, answer, context):
+def validate_answer(question, answer, context):
 
     prompt = f"""
     You are an answer quality evaluator.
@@ -119,3 +119,4 @@ def vaalidate_answer(question, answer, context):
 
     return response.json()["response"]
     
+

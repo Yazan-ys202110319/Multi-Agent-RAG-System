@@ -2,14 +2,14 @@
 
 import re
 
-from src.generation.llm import vaalidate_answer
+from src.generation.llm import validate_answer
 
 def validation_agent(question, answer, chunks):
 
     
     context = "\n".join(chunks)
 
-    result = vaalidate_answer(
+    result = validate_answer(
         question, 
         answer,
         context
@@ -27,16 +27,28 @@ def validation_agent(question, answer, chunks):
 
     score_match = re.search(r"SCORE:\s*(\d+)", result)
 
+
     if score_match:
         score = int(score_match.group(1))
     else:
         score = 0
 
 
+        # Extract feedback/reason
+    feedback_match = re.search(
+        r"REASON:\s*(.*)",
+        result
+    )
+
+    if feedback_match:
+        feedback = feedback_match.group(1)
+    else:
+        feedback = "No feedback provided"
+
     return {
         "valid": valid,
         "answer": answer,
-        "feedback": result,
+        "feedback": feedback,
         "score": score
     }
 

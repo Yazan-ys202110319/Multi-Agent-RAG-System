@@ -18,9 +18,9 @@ class AgentState(TypedDict):
     question: str
     chunks: str
     answer: str
-    valid: str
+    valid: bool
     retries: int
-    feedback: str
+    feedback: str # "Why is it invalid and how should the reasoning agent improve it?"
     score: int
 
 
@@ -110,7 +110,9 @@ def validation_node(state: AgentState):
 # the routing function, it decide where to go next.
 def check_validation(state: AgentState):
 
-    if state["score"] and state["score"] >= 8:
+    print("\n--- ROUTING ---")
+
+    if state["valid"] == True:
         return "end"
 
     if state["retries"] >= 3:

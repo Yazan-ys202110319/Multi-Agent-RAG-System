@@ -1,16 +1,13 @@
 # Convert each text chunk into a numerical vector that a LLM can compare.
 # Before: "Traffic cameras improve road safety" after embeddings: [0.352, -0.2524, 0.6955]
 
-print("Loading embeddings.py")
+
 
 from sentence_transformers import SentenceTransformer # This library provides pretrained models that convert text into vectors
-
-print("Sentence transformer imported")
 
 
 model = None
 
-print("Model variable created")
 
 def get_model(): # Lazy load the embedding model
 
