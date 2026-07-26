@@ -1,0 +1,25 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+venv/
+.venv/
+ml-env/
+
+# Environment variables
+.env
+
+# IDE
+.vscode/
+
+# Jupyter
+.ipynb_checkpoints/
+
+
+# Models
+models/
+
+# OS files
+.DS_Store
+Thumbs.db
