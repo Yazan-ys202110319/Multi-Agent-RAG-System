@@ -22,7 +22,14 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.title("📚 ScholarAI", text_alignment = "center")
+st.markdown(
+    """
+    <h1 style="text-align: center;">
+    📚 ScholarAI
+    </h1>
+    """,
+    unsafe_allow_html=True
+)
 st.subheader("AI-Powered Research Paper Assistant", text_alignment = "center")
 
 
