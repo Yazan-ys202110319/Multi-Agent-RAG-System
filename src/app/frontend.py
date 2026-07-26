@@ -30,7 +30,15 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-st.subheader("AI-Powered Research Paper Assistant", text_alignment = "center")
+
+st.markdown(
+    """
+    <h3 style="text-align: center;">
+    AI-Powered Research Paper Assistant
+    </h3>
+    """,
+    unsafe_allow_html=True
+)
 
 
 
