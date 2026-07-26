@@ -78,7 +78,7 @@ if submit:
     if question:
 
 
-            with st.spinner("Searching papers and generating answer...", width="stretch"):
+            with st.spinner("Searching papers and generating answer..."):
 
 
                 # Streamlit app sends an HTTP POST request.
