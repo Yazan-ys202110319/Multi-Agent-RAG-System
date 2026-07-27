@@ -31,25 +31,7 @@ This system lets users upload any PDF or text document and ask natural language 
 
 ```mermaid
 flowchart TD
-    A[User] --> B[Streamlit Frontend]
-    B --> C[FastAPI Backend]
-    C --> D[LangGraph Orchestrator]
-
-    D --> E[Retriever Agent]
-    E --> H[(ChromaDB Vector Store)]
-    H --> I[Sentence Transformers Embedding Model]
-
-    E --> F[Reasoning Agent]
-    F --> J[Mistral 7B via Ollama]
-
-    F --> G[Validation Agent]
-    G --> K{Answer Grounded?}
-
-    K -->|Yes| L[Return Answer + Citations]
-    K -->|No - feedback loop| M{Retry Count < 3?}
-
-    M -->|Yes| F
-    M -->|No| N[Stop and Return Best Available Response]
+    
 ```
 
 ---
@@ -75,7 +57,7 @@ The system uses three specialized agents coordinated by a LangGraph state machin
 
 **Reasoning Agent** — Receives the retrieved chunks and the original query. Constructs a grounded prompt and generates an answer using Mistral 7B via Ollama. Constrained to only use information present in the retrieved context.
 
-**Critic Agent** — Verifies that the generated answer is actually supported by the retrieved chunks. If the answer contains claims not grounded in the source material, it flags the response rather than returning it — preventing hallucination from reaching the user.
+**Validation Agent** — Verifies that the generated answer is actually supported by the retrieved chunks. If the answer contains claims not grounded in the source material, it flags the response rather than returning it — preventing hallucination from reaching the user.
 
 ---
 
