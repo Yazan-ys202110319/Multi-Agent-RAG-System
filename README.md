@@ -34,15 +34,22 @@ flowchart TD
     A[User] --> B[Streamlit Frontend]
     B --> C[FastAPI Backend]
     C --> D[LangGraph Orchestrator]
+
     D --> E[Retriever Agent]
-    D --> F[Reasoning Agent]
-    D --> G[Critic Agent]
     E --> H[(ChromaDB Vector Store)]
-    H --> I[Sentence Transformers\nEmbedding Model]
+    H --> I[Sentence Transformers Embedding Model]
+
+    E --> F[Reasoning Agent]
     F --> J[Mistral 7B via Ollama]
+
+    F --> G[Validation Agent]
     G --> K{Answer Grounded?}
+
     K -->|Yes| L[Return Answer + Citations]
-    K -->|No| M[Flag for Review]
+    K -->|No - feedback loop| M{Retry Count < 3?}
+
+    M -->|Yes| F
+    M -->|No| N[Stop and Return Best Available Response]
 ```
 
 ---
