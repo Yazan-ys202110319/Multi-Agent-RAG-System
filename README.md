@@ -31,7 +31,25 @@ This system lets users upload any PDF or text document and ask natural language 
 
 ```mermaid
 flowchart TD
-    
+    A[User] --> B[Streamlit Frontend]
+    B --> C[FastAPI Backend]
+    C --> D[LangGraph Orchestrator]
+
+    D --> E[Retriever Agent]
+    E --> H[(ChromaDB Vector Store)]
+    H --> I[Sentence Transformers Embedding Model]
+
+    E --> F[Reasoning Agent]
+    F --> J[Mistral 7B via Ollama]
+
+    F --> G[Validation Agent]
+    G --> K{Answer Grounded?}
+
+    K -->|Yes| L[Return Answer + Citations]
+    K -->|No - feedback loop| M{Retry Count < 3?}
+
+    M -->|Yes| F
+    M -->|No| N[Stop and Return Best Available Response]
 ```
 
 ---
@@ -57,7 +75,14 @@ The system uses three specialized agents coordinated by a LangGraph state machin
 
 **Reasoning Agent** — Receives the retrieved chunks and the original query. Constructs a grounded prompt and generates an answer using Mistral 7B via Ollama. Constrained to only use information present in the retrieved context.
 
-**Validation Agent** — Verifies that the generated answer is actually supported by the retrieved chunks. If the answer contains claims not grounded in the source material, it flags the response rather than returning it — preventing hallucination from reaching the user.
+**Validation Agent (Critic)** — Evaluates whether the generated answer is supported by the retrieved chunks. It acts as a conditional routing node in the LangGraph state machine with two possible outcomes:
+
+- Grounded → The answer is returned to the user with source citations.
+- Ungrounded → The Validation Agent sends corrective feedback to the Reasoning Agent, identifying issues and requesting regeneration based strictly on the retrieved context.
+
+The Validation Agent and Reasoning Agent form a feedback loop that enables self-correction. To prevent infinite regeneration cycles, the system enforces a **maximum of 3 retry attempts**. If the answer remains ungrounded after the retry limit is reached, the workflow terminates instead of continuing indefinitely.
+
+This controlled feedback mechanism improves answer reliability compared to a traditional RAG pipeline, which would blindly return the first generated response without verification.
 
 ---
 
