@@ -1,7 +1,7 @@
 streamlit==1.37.1
 fastapi==0.115.6
 uvicorn==0.34.0
-chromadb==0.5.23
+chromadb==1.5.9
 PyMuPDF==1.24.14
 sentence-transformers==3.0.1
 langgraph==0.2.50
