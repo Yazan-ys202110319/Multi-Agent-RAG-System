@@ -36,7 +36,7 @@ flowchart TD
     C --> D[LangGraph Orchestrator]
     D --> E[Retriever Agent]
     D --> F[Reasoning Agent]
-    D --> G[Critic Agent]
+    D --> G[Validation Agent]
     E --> H[(ChromaDB Vector Store)]
     H --> I[Sentence Transformers\nEmbedding Model]
     F --> J[Mistral 7B via Ollama]
