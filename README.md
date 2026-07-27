@@ -1,4 +1,5 @@
-# 🔍 Multi-Agent RAG System
+# 📚 ScholarAI 
+## A Multi-Agent Retrieval-Augmented Generation (RAG) System
 
 > Upload any document and ask questions in natural language. Specialized AI agents collaborate to retrieve, reason, and return grounded answers with source citations.
 
