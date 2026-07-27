@@ -68,7 +68,7 @@ The system uses three specialized agents coordinated by a LangGraph state machin
 
 **Reasoning Agent** — Receives the retrieved chunks and the original query. Constructs a grounded prompt and generates an answer using Mistral 7B via Ollama. Constrained to only use information present in the retrieved context.
 
-**Critic Agent** — Verifies that the generated answer is actually supported by the retrieved chunks. If the answer contains claims not grounded in the source material, it flags the response rather than returning it — preventing hallucination from reaching the user.
+**Validation Agent** — Verifies that the generated answer is actually supported by the retrieved chunks. If the answer contains claims not grounded in the source material, it flags the response rather than returning it — preventing hallucination from reaching the user.
 
 ---
 
