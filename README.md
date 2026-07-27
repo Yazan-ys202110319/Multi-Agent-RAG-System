@@ -28,9 +28,52 @@ This system lets users upload any PDF or text document and ask natural language 
 ---
 
 ## Evaluation and Testing
-The system was tested using research papers as the document corpus to evaluate document ingestion, semantic retrieval, reasoning, and answer validation.
+The system was tested using machine learning / deep learning / computer vision research papers as the document corpus to evaluate document ingestion, semantic retrieval, reasoning, and answer validation.
 
-The papers that has been used [here](./src/data/).
+The papers that has been used [here](./src/data/). 
+
+The documents were ingested, chunked, embedded using Sentence Transformers, and stored in ChromaDB. Queries were then evaluated through the multi-agent pipeline consisting of retrieval, reasoning, and validation agents.
+
+### Example Test Results
+
+#### Attention Is All You Need Paper
+
+Query:
+> Explain transformers in LLMs and how they work?
+
+Result:
+- Retrieved relevant sections from the papers.
+- Generated a grounded answer using Mistral 7B.
+- Validation Agent confirmed the answer was supported by the retrieved context.
+
+![Attention Test](./assets/screenshots/transformer_test.jpg)
+
+
+#### YOLO Papers
+
+Query:
+> Explain how YOLO works for a beginner?
+
+Result:
+- Retrieved relevant architectural information.
+- Reasoning Agent generated an answer grounded in the retrieved context.
+- Validation Agent approved the response.
+
+![YOLO Test](./assets/screenshots/YOLO_test.jpg)
+
+#### Retrieval-Augmented Generation Paper
+
+Query:
+> What is RAG and why I need it?
+
+Result:
+- Retrieved the sections explaining the motivation behind RAG.
+- Reasoning Agent generated an answer based **only** on retrieved chunks.
+- Validation Agent verified the answer before it was returned.
+
+![RAG Test](./assets/screenshots/RAG_test.jpg)
+
+---
 
 ## 🏗️ Architecture
 
