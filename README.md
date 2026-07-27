@@ -27,6 +27,11 @@ This system lets users upload any PDF or text document and ask natural language 
 
 ---
 
+## Evaluation and Testing
+The system was tested using research papers as the document corpus to evaluate document ingestion, semantic retrieval, reasoning, and answer validation.
+
+The papers that has been used [here](./src/data/).
+
 ## 🏗️ Architecture
 
 ```mermaid
