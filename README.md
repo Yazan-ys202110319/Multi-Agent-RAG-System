@@ -165,16 +165,13 @@ source venv/bin/activate  # Windows: venv\Scripts\activate
 # 3. Install dependencies
 pip install -r requirements.txt
 
-# 4. Copy environment variables and fill in your keys
-cp .env.example .env
-
-# 5. Pull the Mistral model via Ollama
+# 4. Pull the Mistral model via Ollama
 ollama pull mistral
 
-# 6. Start the FastAPI backend
+# 5. Start the FastAPI backend
 uvicorn src.api.main:app --reload
 
-# 7. In a separate terminal, start the Streamlit frontend
+# 6. In a separate terminal, start the Streamlit frontend
 streamlit run frontend.py
 ```
 
