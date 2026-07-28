@@ -169,7 +169,7 @@ pip install -r requirements.txt
 ollama pull mistral
 
 # 5. Start the FastAPI backend
-uvicorn src.api.main:app --reload
+uvicorn src.app.api:app --reload
 
 # 6. In a separate terminal, start the Streamlit frontend
 streamlit run frontend.py
