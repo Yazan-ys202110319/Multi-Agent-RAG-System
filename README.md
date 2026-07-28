@@ -156,7 +156,7 @@ This controlled feedback mechanism improves answer reliability compared to a tra
 ```bash
 # 1. Clone the repo
 git clone https://github.com/Yazan-ys202110319/Multi-Agent-RAG-System.git
-cd multi-agent-rag
+cd multi-agent-rag-system
 
 # 2. Create and activate a virtual environment
 python -m venv venv
