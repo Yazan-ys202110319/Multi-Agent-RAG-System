@@ -160,11 +160,10 @@ cd multi-agent-rag-system
 
 # 2. Create and activate a virtual environment
 python -m venv venv
-# macOS / Linux:
-source venv/bin/activate  
 # Windows (Powershell)
 .\venv\Scripts\Activate.ps1
-
+# macOS / Linux:
+source venv/bin/activate  
 
 # 3. Install dependencies
 pip install -r requirements.txt
@@ -175,7 +174,7 @@ ollama pull mistral
 
 # 5. Populate ChromaDB 
 python src/ingestion/ingest.py
-# ensure you have documents under src/data before running this
+# ensure you have documents under src/data before running this command 
 
 # 6. Start the FastAPI backend
 uvicorn src.app.api:app --reload --host 0.0.0.0 --port 8000
