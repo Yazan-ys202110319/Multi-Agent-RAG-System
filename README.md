@@ -160,19 +160,28 @@ cd multi-agent-rag-system
 
 # 2. Create and activate a virtual environment
 python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
+# macOS / Linux:
+source venv/bin/activate  
+# Windows (Powershell)
+.\venv\Scripts\Activate.ps1
+
 
 # 3. Install dependencies
 pip install -r requirements.txt
 
-# 4. Pull the Mistral model via Ollama
+# 4. Ensure Ollama is installed and running, then pull the model
 ollama pull mistral
+# Ollama should be reachable at http://localhost:11434
 
-# 5. Start the FastAPI backend
-uvicorn src.app.api:app --reload
+# 5. Populate ChromaDB 
+python src/ingestion/ingest.py
+# ensure you have documents under src/data before running this
+
+# 6. Start the FastAPI backend
+uvicorn src.app.api:app --reload --host 0.0.0.0 --port 8000
 
 # 6. In a separate terminal, start the Streamlit frontend
-streamlit run frontend.py
+streamlit run src/app/frontend.py
 ```
 
 The app will be available at `http://localhost:8501`. API docs at `http://localhost:8000/docs`.
