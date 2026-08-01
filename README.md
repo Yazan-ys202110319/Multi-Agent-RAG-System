@@ -155,27 +155,23 @@ This controlled feedback mechanism improves answer reliability compared to a tra
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/your-username/multi-agent-rag
-cd multi-agent-rag
+git clone https://github.com/Yazan-ys202110319/Multi-Agent-RAG-System.git
+cd multi-agent-rag-system
 
 # 2. Create and activate a virtual environment
 python -m venv venv
-# macOS / Linux:
-source venv/bin/activate
-# Windows (Powershell):
-.\venv\Scripts\Activate.ps1
+source venv/bin/activate  # Windows: venv\Scripts\activate
 
 # 3. Install dependencies
 pip install -r requirements.txt
 
-
 # 4. Pull the Mistral model via Ollama
 ollama pull mistral
 
-# 6. Start the FastAPI backend
-uvicorn src.api.main:app --reload
+# 5. Start the FastAPI backend
+uvicorn src.app.api:app --reload
 
-# 7. In a separate terminal, start the Streamlit frontend
+# 6. In a separate terminal, start the Streamlit frontend
 streamlit run frontend.py
 ```
 
