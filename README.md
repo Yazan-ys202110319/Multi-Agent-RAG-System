@@ -160,15 +160,16 @@ cd multi-agent-rag
 
 # 2. Create and activate a virtual environment
 python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
+# macOS / Linux:
+source venv/bin/activate
+# Windows (Powershell):
+.\venv\Scripts\Activate.ps1
 
 # 3. Install dependencies
 pip install -r requirements.txt
 
-# 4. Copy environment variables and fill in your keys
-cp .env.example .env
 
-# 5. Pull the Mistral model via Ollama
+# 4. Pull the Mistral model via Ollama
 ollama pull mistral
 
 # 6. Start the FastAPI backend
